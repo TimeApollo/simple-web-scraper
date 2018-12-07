@@ -84,12 +84,15 @@ def find_phone_numbers(html_parser):
 def scraper_html_parser():
     """Creates an HTML parser class."""
     class ScraperHTMLParser(HTMLParser):
+        """Html parser class with functions overridden."""
         def __init__(self):
+            """Reinitialize the html parser methods and make new attributes."""
             HTMLParser.__init__(self)
             self.text = []
             self.start_tag_attrs = []
 
         def handle_starttag(self, tag, attrs):
+            """Appends value if tag is img or svg and has src location."""
             if tag == 'svg' or tag == 'img':
                 for name, value in attrs:
                     if name == 'src' \
@@ -98,6 +101,7 @@ def scraper_html_parser():
                         self.start_tag_attrs.append(value)
 
         def handle_data(self, data):
+            """Strips empty space from content and returns in list."""
             data = data.strip()
             if data:
                 self.text.append(data)
